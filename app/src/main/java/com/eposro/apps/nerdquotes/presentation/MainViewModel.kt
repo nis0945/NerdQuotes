@@ -15,6 +15,7 @@ class MainViewModel : ViewModel() {
     val uiState get() = _uiState as LiveData<MainActivityState>
 
     var quote: String? = null
+    var author: String? = null
 
     fun loadQuote() {
         _uiState.postValue(_uiState.value!!.copy(isLoading = true))
@@ -59,6 +60,7 @@ class MainViewModel : ViewModel() {
             if (response.isSuccessful) {
                 response.body()?.let {
                     quote = it.en
+                    author = it.author
                 }
                 _uiState.postValue(_uiState.value!!.copy(isLoading = false, hasError = false))
             }

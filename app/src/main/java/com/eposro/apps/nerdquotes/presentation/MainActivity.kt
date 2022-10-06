@@ -23,8 +23,11 @@ class MainActivity : AppCompatActivity() {
             if (state.hasError) {
                 Snackbar.make(binding.root, state.error!!, Snackbar.LENGTH_INDEFINITE).show()
             } else {
-                binding.tvQuote.text =
-                    if (state.isLoading) getString(R.string.loading_txt) else viewModel.quote
+                binding.tvQuote.text = viewModel.quote ?: getString(R.string.loading_txt)
+                binding.tvAuthor.text = getString(
+                    R.string.author_with_name,
+                    viewModel.author ?: getString(R.string.unknown)
+                )
                 binding.btnNextQuote.isEnabled = !state.isLoading
             }
         }
