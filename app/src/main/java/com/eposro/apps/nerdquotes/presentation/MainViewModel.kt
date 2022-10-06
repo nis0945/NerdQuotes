@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import com.eposro.apps.nerdquotes.model.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
@@ -20,16 +20,47 @@ class MainViewModel : ViewModel() {
         _uiState.postValue(_uiState.value!!.copy(isLoading = true))
         viewModelScope.launch {
 
-            try {
-                delay(5000) // Fake an API call
-                _uiState.postValue(_uiState.value!!.copy(isLoading = false))
-                quote = "The quick brown fox jumps over the lazy dog."
-            } catch (e: IOException){
+            val response = try {
+                RetrofitInstance.api.getRandomQuote()
+            } catch (e: IOException) {
                 // Most likely no internet connection available.
-                _uiState.postValue(_uiState.value!!.copy(isLoading = false))
-            } catch (e: HttpException){
-                // Unexpected 2xx http response
+                _uiState.postValue(
+                    _uiState.value!!.copy(
+                        isLoading = false,
+                        hasError = true,
+                        error = "No internet connection."
+                    )
+                )
                 Timber.e(e)
+                return@launch
+            } catch (e: HttpException) {
+                // Unexpected 2xx http response
+                _uiState.postValue(
+                    _uiState.value!!.copy(
+                        isLoading = false,
+                        hasError = true,
+                        error = "API returned unexpected response"
+                    )
+                )
+                Timber.e(e)
+                return@launch
+            } catch (e: Throwable) {
+                _uiState.postValue(
+                    _uiState.value!!.copy(
+                        isLoading = false,
+                        hasError = true,
+                        error = "Something went wrong."
+                    )
+                )
+                Timber.e("An unrecognized error occurred.\n$e")
+                return@launch
+            }
+
+            if (response.isSuccessful) {
+                response.body()?.let {
+                    quote = it.en
+                }
+                _uiState.postValue(_uiState.value!!.copy(isLoading = false, hasError = false))
             }
         }
     }

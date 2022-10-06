@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.eposro.apps.nerdquotes.R
 import com.eposro.apps.nerdquotes.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,9 +20,13 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadQuote()
 
         viewModel.uiState.observe(this) { state ->
-            binding.tvQuote.text =
-                if (state.isLoading) getString(R.string.loading_txt) else viewModel.quote
-            binding.btnNextQuote.isEnabled = !state.isLoading
+            if (state.hasError) {
+                Snackbar.make(binding.root, state.error!!, Snackbar.LENGTH_INDEFINITE).show()
+            } else {
+                binding.tvQuote.text =
+                    if (state.isLoading) getString(R.string.loading_txt) else viewModel.quote
+                binding.btnNextQuote.isEnabled = !state.isLoading
+            }
         }
 
         binding.apply {

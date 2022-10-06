@@ -3,4 +3,5 @@
 
     <string name="loading_txt">Loading…</string>
     <string name="load_quote_btn_txt">New Quote</string>
+    <string name="author_with_name">- %s</string>
 </resources>
