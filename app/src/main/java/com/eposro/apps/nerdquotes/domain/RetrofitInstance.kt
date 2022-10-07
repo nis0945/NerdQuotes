@@ -1,4 +1,4 @@
-package com.eposro.apps.nerdquotes.model
+package com.eposro.apps.nerdquotes.domain
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

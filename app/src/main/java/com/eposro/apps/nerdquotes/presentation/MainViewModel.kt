@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.eposro.apps.nerdquotes.model.RetrofitInstance
+import com.eposro.apps.nerdquotes.domain.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package com.eposro.apps.nerdquotes.model.entities
+package com.eposro.apps.nerdquotes.domain.entities
 
 data class ProgrammingQuote(
     val id: String,

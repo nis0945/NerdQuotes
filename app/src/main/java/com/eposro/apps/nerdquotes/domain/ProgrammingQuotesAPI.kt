@@ -1,6 +1,6 @@
-package com.eposro.apps.nerdquotes.model
+package com.eposro.apps.nerdquotes.domain
 
-import com.eposro.apps.nerdquotes.model.entities.ProgrammingQuote
+import com.eposro.apps.nerdquotes.domain.entities.ProgrammingQuote
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
