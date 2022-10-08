@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eposro.apps.nerdquotes.domain.RetrofitInstance
 import com.eposro.apps.nerdquotes.domain.entities.ProgrammingQuote
+
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
