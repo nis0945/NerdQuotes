@@ -16,3 +16,8 @@ local.properties
 
 *.apk
 /keystore.properties
+/APKs
+/app/release/*.apk
+/app/release/*.json
+/app/debug/*.apk
+/app/debug/*.json
