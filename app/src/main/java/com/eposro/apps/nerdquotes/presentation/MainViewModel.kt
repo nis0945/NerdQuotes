@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eposro.apps.nerdquotes.domain.RetrofitInstance
+import com.eposro.apps.nerdquotes.domain.entities.ProgrammingQuote
+
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import timber.log.Timber
@@ -14,8 +16,8 @@ class MainViewModel : ViewModel() {
     private val _uiState: MutableLiveData<MainActivityState> = MutableLiveData(MainActivityState())
     val uiState get() = _uiState as LiveData<MainActivityState>
 
-    var quote: String? = null
-    var author: String? = null
+    private val _recentQuotes: MutableList<ProgrammingQuote> = mutableListOf()
+    val recentQuotes get() = _recentQuotes as List<ProgrammingQuote>
 
     fun loadQuote() {
         _uiState.postValue(_uiState.value!!.copy(isLoading = true))
@@ -59,11 +61,14 @@ class MainViewModel : ViewModel() {
 
             if (response.isSuccessful) {
                 response.body()?.let {
-                    quote = it.en
-                    author = it.author
+                    _recentQuotes.add(it)
                 }
                 _uiState.postValue(_uiState.value!!.copy(isLoading = false, hasError = false))
             }
         }
+    }
+
+    init {
+        loadQuote()
     }
 }
