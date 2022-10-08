@@ -5,4 +5,6 @@
     <string name="load_quote_btn_txt">New Quote</string>
     <string name="author_with_name">- %s</string>
     <string name="unknown">Unknown</string>
+    <string name="recent_quotes">Recent Quotes</string>
+    <string name="history">History</string>
 </resources>
