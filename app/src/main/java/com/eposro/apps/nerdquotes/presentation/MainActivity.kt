@@ -16,19 +16,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /* Inflate our UI */
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.apply {
             btnNextQuote.setOnClickListener { viewModel.loadQuote() }
+            bottomSheet.rvRecentQuotes.adapter = bottomSheetAdapter
+            bottomSheet.rvRecentQuotes.layoutManager = LinearLayoutManager(this@MainActivity)
         }
-        binding.bottomSheet.rvRecentQuotes.adapter = bottomSheetAdapter
-        binding.bottomSheet.rvRecentQuotes.layoutManager = LinearLayoutManager(this@MainActivity)
 
         viewModel.uiState.observe(this) { state ->
+
+            /* Show a permanent snackbar notifying the user that some error has occurred. */
             if (state.hasError) {
                 Snackbar.make(binding.root, state.error!!, Snackbar.LENGTH_INDEFINITE).show()
             } else {
+
+                /*
+                * When State.isLoading is false, show the last (most recent ) quote from recent
+                * quotes.
+                */
                 if (!state.isLoading) viewModel.recentQuotes.last().let {
                     binding.tvQuote.text = it.en
                     binding.tvAuthor.text = getString(

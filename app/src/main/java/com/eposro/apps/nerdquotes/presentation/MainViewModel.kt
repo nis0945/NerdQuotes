@@ -24,7 +24,7 @@ class MainViewModel : ViewModel() {
         viewModelScope.launch {
 
             val response = try {
-                RetrofitInstance.api.getRandomQuote()
+                RetrofitInstance.programmingQuotesAPI.getRandomQuote()
             } catch (e: IOException) {
                 // Most likely no internet connection available.
                 _uiState.postValue(
@@ -48,6 +48,7 @@ class MainViewModel : ViewModel() {
                 Timber.e(e)
                 return@launch
             } catch (e: Throwable) {
+                // Unknown error
                 _uiState.postValue(
                     _uiState.value!!.copy(
                         isLoading = false,
@@ -68,6 +69,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    /* Get quotes from the API when this ViewModel's constructor is called. */
     init {
         loadQuote()
     }
