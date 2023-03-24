@@ -28,4 +28,4 @@ NerdQuotes has a simple interface, no bs included :)
 <br>
 <br>
 
-⚠️ NOTE: Please do not open any pull requests because this is just an application for my portfolio.
+⚠️ NOTE: I am no longer actively developing this project.
